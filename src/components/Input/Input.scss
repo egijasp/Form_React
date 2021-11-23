@@ -1,0 +1,26 @@
+.form__input-wrapper {
+  display: grid;
+}
+
+.form__input {
+  padding: 5px 10px;
+  width: 400px;
+  height: 30px;
+  display: grid;
+  align-self: center;
+  grid-gap: 20px;
+  border-radius: 5px;
+}
+
+[type='radio'], [type='checkbox']  {
+  width: 20px;
+  height: 20px;
+  float: left;
+}
+
+.form__errorMessage {
+  font-size: 14px;
+  color: red;
+  margin-bottom: 15px;
+}
+

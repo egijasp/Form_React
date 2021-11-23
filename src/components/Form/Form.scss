@@ -1,0 +1,22 @@
+.form__container {
+  margin-top: 50px;
+  padding: 20px;
+  background-color: lightgray;
+}
+
+.form__button {
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  background-color: darkslategray;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bolder;
+  margin-bottom: 30px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
