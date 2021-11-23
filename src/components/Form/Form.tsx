@@ -33,7 +33,7 @@ const Form = () => {
     ref.current?.focus();
   }, []);
 
-  const notify = () => toast('Form has been submitted!');
+  const notification = () => toast('Form has been submitted!');
 
   const validation = () => {
     if (!values.fullName) {
@@ -56,6 +56,14 @@ const Form = () => {
     } else if (values.phoneNumber.length < 8) {
       errors.phoneNumber = 'Phone number needs to be 8 numbers or more';
     }
+
+    if (!values.gender) {
+      errors.gender = 'You need choose one';
+    }
+
+    if (!values.botsCheck) {
+      errors.botsCheck = 'You need to confirm that you are not a robot';
+    }
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -69,7 +77,7 @@ const Form = () => {
         e.preventDefault();
         validation();
         setValues(initialValues);
-        notify();
+        notification();
       }}
       >
         <Input
@@ -114,7 +122,7 @@ const Form = () => {
           value="female"
           label="Female"
           onChange={onChange}
-          // errorMessage="You need choose one"
+          errorMessage={errors.gender}
         />
         <Input
           type="checkbox"
@@ -122,7 +130,7 @@ const Form = () => {
           checked={values.botsCheck}
           label="I am not robot"
           onChange={onChange}
-          errorMessage=""
+          errorMessage={errors.botsCheck}
         />
         <button
           className="form__button"
@@ -133,7 +141,6 @@ const Form = () => {
         >
           Submit
         </button>
-
       </form>
     </div>
   );
