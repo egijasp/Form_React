@@ -11,12 +11,11 @@ type InputProps = {
   id?: string,
   errorMessage?: string,
   checked?: boolean,
-
-}
+};
 
 const Input:FC<InputProps> = ({
   type, name, value, placeholder,
-  onChange, label, id, errorMessage, checked,
+  onChange, label, id, errorMessage, checked
 }) => (
   <div className="form__input-wrapper">
     <label htmlFor={id}>

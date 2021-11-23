@@ -1,3 +1,4 @@
+import { toast, ToastContainer } from 'react-toastify';
 import {
   ChangeEvent, useEffect, useRef, useState,
 } from 'react';
@@ -19,8 +20,9 @@ const initialValues = {
   },
 };
 
-const emailReg = /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\. [a-zA-Z0-9-]+)*$/;
+const emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const phoneNumberReg = /^[0-9]*$/;
+const nameReg = /^[A-Za-z]+$/;
 
 const Form = () => {
   const [values, setValues] = useState(initialValues);
@@ -31,9 +33,13 @@ const Form = () => {
     ref.current?.focus();
   }, []);
 
+  const notify = () => toast('Form has been submitted!');
+
   const validation = () => {
     if (!values.fullName) {
       errors.fullName = 'Full name field is required';
+    } else if (!nameReg.test(values.fullName)) {
+      errors.fullName = 'Full name should contain only letters';
     }
 
     if (!values.email) {
@@ -43,12 +49,13 @@ const Form = () => {
     }
 
     if (!values.phoneNumber) {
-      errors.phoneNumber = 'Phone number ir required';
+      errors.phoneNumber = 'Phone number is required';
     } else if
     (!phoneNumberReg.test(values.phoneNumber)) {
       errors.phoneNumber = 'Please enter valid phone number';
+    } else if (values.phoneNumber.length < 8) {
+      errors.phoneNumber = 'Phone number needs to be 8 numbers or more';
     }
-    return errors;
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -62,20 +69,19 @@ const Form = () => {
         e.preventDefault();
         validation();
         setValues(initialValues);
+        notify();
       }}
       >
         <Input
           type="text"
           name="fullName"
           value={values.fullName}
-          label="Full Name"
           placeholder="Full Name"
           onChange={onChange}
           errorMessage={errors.fullName}
         />
-        {errors.fullName && <span>{errors.fullName}</span>}
         <Input
-          type="email"
+          type="text"
           name="email"
           value={values.email}
           label="E-mail"
@@ -92,7 +98,15 @@ const Form = () => {
           onChange={onChange}
           errorMessage={errors.phoneNumber}
         />
-        <Input type="radio" name="gender" checked={values.gender === 'male'} value="male" label="Male" onChange={onChange} />
+        <Input
+          type="radio"
+          name="gender"
+          checked={values.gender === 'male'}
+          value="male"
+          label="Male"
+          onChange={onChange}
+        />
+
         <Input
           type="radio"
           name="gender"
@@ -100,7 +114,7 @@ const Form = () => {
           value="female"
           label="Female"
           onChange={onChange}
-          errorMessage="You need choose one"
+          // errorMessage="You need choose one"
         />
         <Input
           type="checkbox"
@@ -115,13 +129,11 @@ const Form = () => {
           type="submit"
           onClick={() => {
             validation();
-            if (!validation) {
-              setValues(initialValues);
-            }
           }}
         >
           Submit
         </button>
+
       </form>
     </div>
   );
